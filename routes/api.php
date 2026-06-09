@@ -2,16 +2,18 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
-// Registration route
+// Auth routes
 Route::post('/register', [AuthController::class, 'register']);
-
-// Login route
 Route::post('/login', [AuthController::class, 'login']);
 
-// Protected Routes - only authenticated users can access
+// Public course routes
+Route::apiResource('courses', CourseController::class)->only(['index', 'show']);
+
+// Protected Routes
 Route::middleware('auth:sanctum')->group(function () {
-    // Logout route
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
 });
