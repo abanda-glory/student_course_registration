@@ -12,7 +12,7 @@ class EnrollRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class EnrollRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'course_id' => 'required|integer|exists:courses,id'
         ];
     }
 }

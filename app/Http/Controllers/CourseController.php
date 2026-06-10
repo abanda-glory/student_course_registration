@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,17 +30,11 @@ class CourseController extends Controller
         ], 200);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreCourseRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string|unique:courses,title|max:255',
-            'code' => 'required|string|unique:courses,code|max:100',
-            'description' => 'required|string',
-            'credit_hours' => 'required|integer|min:1'
-        ]);
 
         // Create course into database
-        $course = Course::create($validated);
+        $course = Course::create($request->validated());
 
         return response()->json([
             'message' => 'Course successfully Created',
@@ -46,18 +42,11 @@ class CourseController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id): JsonResponse
+    public function update(UpdateCourseRequest $request, $id): JsonResponse
     {
         $course = Course::findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => 'sometimes|required|string|unique:courses,title,' . $id . '|max:255',
-            'code' => 'sometimes|required|string|unique:courses,code,' . $id . '|max:100',
-            'description' => 'sometimes|required|string',
-            'credit_hours' => 'sometimes|required|integer|min:1'
-        ]);
-
-        $course->update($validated);
+        $course->update($request->validated());
 
         return response()->json([
             'message' => 'Update Successful!'

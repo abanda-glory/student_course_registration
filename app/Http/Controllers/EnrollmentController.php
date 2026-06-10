@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EnrollRequest;
 use App\Models\Enrollment;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
@@ -9,11 +10,8 @@ use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
 {
-    public function enroll(Request $request): JsonResponse
+    public function enroll(EnrollRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'course_id' => 'required|integer|exists:courses,id'
-        ]);
 
         // Check if user is enrolled already
 
@@ -29,7 +27,7 @@ class EnrollmentController extends Controller
 
         $enrollment = Enrollment::create([
             'user_id' => $request->user()->id,
-            'course_id' => $validated['course_id'],
+            'course_id' => $request->course_id,
             'enrollment_date' => now()->toDateString()
         ]);
 

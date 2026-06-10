@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,16 +12,10 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     // Registration
-    public function register(Request $request): JsonResponse
+    public function register(RegistrationRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|confirmed|min:8'
-        ]);
-
         // Create the user in the database
-        $user = User::create($validated);
+        $user = User::create($request->validated());
 
         // Logs user automatically and generate token
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -32,12 +28,8 @@ class AuthController extends Controller
     }
 
     // Login
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
 
         // verify user by email
         $user =  User::where('email', $request->email)->first();

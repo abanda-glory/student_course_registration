@@ -12,7 +12,7 @@ class UpdateCourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +22,12 @@ class UpdateCourseRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            //
+            'title' => 'sometimes|required|string|unique:courses,title,' . $id . '|max:255',
+            'code' => 'sometimes|required|string|unique:courses,code,' . $id . '|max:100',
+            'description' => 'sometimes|required|string',
+            'credit_hours' => 'sometimes|required|integer|min:1'
         ];
     }
 }
