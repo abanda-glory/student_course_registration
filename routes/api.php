@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 // Auth routes
@@ -16,4 +17,7 @@ Route::apiResource('courses', CourseController::class)->only(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
+    Route::post('/enrollments', [EnrollmentController::class, 'enroll']);
+    Route::get('/enrollments', [EnrollmentController::class, 'myEnrollments']);
+    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'cancel']);
 });
