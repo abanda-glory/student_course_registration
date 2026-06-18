@@ -18,9 +18,12 @@ Route::apiResource('courses', CourseController::class)->only(['index', 'show']);
 // Protected Routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
     Route::post('/enrollments', [EnrollmentController::class, 'enroll']);
     Route::get('/enrollments', [EnrollmentController::class, 'myEnrollments']);
     Route::delete('/enrollments/{id}', [EnrollmentController::class, 'cancel']);
     Route::get('/profile', [AuthController::class, 'profile']);
+});
+
+Route::middleware('auth:sanctum', 'is_admin')->group(function () {
+    Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
 });
