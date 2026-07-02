@@ -13,11 +13,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate([
-            "name" => "Admin",
-            "email" => "admin@example.com",
-            "password" => "admin12345",
-            "is_admin" => true
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => 'admin12345',
+                'is_admin' => true
+            ]
+        );
     }
 }
