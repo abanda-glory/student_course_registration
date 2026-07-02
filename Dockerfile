@@ -25,10 +25,10 @@ COPY . .
 RUN composer install --optimize-autoloader
 
 # Set permissions
-RUN chmod -R 775 storage bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache
 
 # Expose port
 EXPOSE 10000
 
 # Start command
-CMD php artisan migrate --force && php artisan db:seed --force && php artisan l5-swagger:generate && php artisan serve --host=0.0.0.0 --port=10000
+CMD php artisan migrate --force && php artisan db:seed --force && php artisan config:clear && php artisan l5-swagger:generate && php artisan serve --host=0.0.0.0 --port=10000
