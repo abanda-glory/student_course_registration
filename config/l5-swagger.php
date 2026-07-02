@@ -30,6 +30,7 @@ return [
                  */
                 'docs_json' => 'api-docs.json',
 
+
                 /*
                  * File name of the generated YAML documentation file
                  */
@@ -54,7 +55,7 @@ return [
             /*
              * Route for accessing parsed swagger annotations.
              */
-            'docs' => 'docs',
+            'docs' => 'api/documentation',
 
             /*
              * Route for Oauth2 authentication callback.
