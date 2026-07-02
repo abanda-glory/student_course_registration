@@ -94,7 +94,7 @@ class CourseController extends Controller
     public function store(StoreCourseRequest $request): JsonResponse
     {
 
-        // Create course into database
+        // Create course in database
         $course = Course::create($request->validated());
 
         return response()->json([

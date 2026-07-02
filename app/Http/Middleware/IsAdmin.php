@@ -22,7 +22,7 @@ class IsAdmin
             ], 403);
         }
 
-        // is user is admin continue request to controller
+        // if user is admin continue request to controller
         return $next($request);
     }
 }
