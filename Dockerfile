@@ -25,7 +25,7 @@ COPY . .
 RUN composer install --optimize-autoloader
 
 # Set permissions
-RUN chmod -R 777 storage bootstrap/cache
+RUN mkdir -p public/api-docs && chmod -R 777 storage bootstrap/cache public/api-docs
 
 # Expose port
 EXPOSE 10000
