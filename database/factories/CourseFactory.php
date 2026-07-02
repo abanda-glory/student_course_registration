@@ -18,10 +18,10 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->words(3, true),
-            'code' => fake()->unique()->regexify('[A-Z]{3}[0-9]{3}'),
-            'description' => fake()->text(),
-            'credit_hours' => fake()->numberBetween(1, 4)
+            'title' => $this->faker->words(3, true),
+            'code' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{3}'),
+            'description' => $this->faker->text(),
+            'credit_hours' => $this->faker->numberBetween(1, 4)
         ];
     }
 }
