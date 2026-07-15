@@ -114,7 +114,7 @@ class AuthController extends Controller
     // Logout
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->currentAccessToken()->delete(); //Enables log out from current device only
 
         return response()->json([
             'message' => 'Logout Successful'
