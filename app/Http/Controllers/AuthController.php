@@ -37,6 +37,7 @@ class AuthController extends Controller
     {
         // Create the user in the database
         $user = User::create($request->validated());
+        $user->refresh();
 
         // Logs user automatically and generate token
         $token = $user->createToken('auth_token')->plainTextToken;
